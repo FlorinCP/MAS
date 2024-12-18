@@ -9,7 +9,7 @@ from crewai.project import CrewBase, agent, crew, task
 
 @CrewBase
 class EmergencySolver():
-	"""EmergencySolver crew"""
+	"""Emergency crew"""
 
 	agents_config = 'config/emergency_agents.yaml'
 	tasks_config = 'config/emergency_tasks.yaml'
