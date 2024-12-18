@@ -8,7 +8,7 @@ from crewai.project import CrewBase, agent, crew, task
 # from crewai_tools import SerperDevTool
 
 @CrewBase
-class EmergencySolver():
+class EmergencyCrew():
 	"""EmergencySolver crew"""
 
 	agents_config = 'config/emergency_agents.yaml'
