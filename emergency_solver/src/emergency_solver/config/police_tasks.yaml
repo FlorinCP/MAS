@@ -1,17 +1,48 @@
-research_task:
+handle_police_report:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is 2024.
+    Manage the report related to the Police crew by coordinating with the Allocator.
+  steps: >
+    1. Read Dispatcher Pydantic output for the Police crew.  
+    2. Based on their knowledge, assess the situation.  
+    3. Contact the Allocator with conclusions to ask for resource allocation.  
+    4. Execute the Block streets task while waiting for the Allocator's response.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    An assessment report and resource allocation request sent to the Allocator, including preliminary street block information.
+  schema:
+    agent: general_purpose_police
 
-reporting_task:
+block_streets:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Identify and include information about adjacent streets to be blocked and suggest alternative routes.
+  steps: >
+    1. Identify adjacent streets that need to be blocked.  
+    2. Include the blocked streets and alternative routes in the final action plan.
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A detailed list of blocked streets and alternative routes to be included in the action plan.
+  schema:
+    agent: general_purpose_police
+
+craft_police_action_plan:
+  description: >
+    Develop the Police section of the action plan based on inputs from the Allocator and street blocking details.
+  steps: >
+    1. Listen to the proposal of the Allocator.  
+    2. Create the Police section of the action plan.  
+    3. Report the Police action plan to the Dispatcher.
+  expected_output: >
+    A detailed Police section of the action plan, validated and ready for submission to the Dispatcher.
+  schema:
+    agent: general_purpose_police
+
+allocate_police_resources:
+  description: >
+    Determine and allocate the necessary police resources for the situation.
+  steps: >
+    1. Receive the recommendation from the General Purpose Police.  
+    2. Read available police resources.  
+    3. Decide which resources (cars, guns, fences) should be sent, including computing distances between the scene and the resource locations.  
+    4. Send the final decision back to the General Purpose Police.
+  expected_output: >
+    A list of police resources and their deployment plan, sent to the General Purpose Police.
+  schema:
+    agent: allocator

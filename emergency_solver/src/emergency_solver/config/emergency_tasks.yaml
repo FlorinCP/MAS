@@ -1,17 +1,31 @@
-research_task:
+handle_emergency_report:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is 2024.
+    Process the incoming emergency report by analyzing and classifying the data.
+    Ensure the information is categorized appropriately for each crew (Medical, Police, Fire) 
+    and dispatch the necessary output to the corresponding teams.
+  steps: >
+    1. Read the emergency report.  
+    2. Parse and analyze the data provided in the report.  
+    3. Classify the information based on the crews involved (Medical, Police, Fire).  
+    4. Send the specific output or instructions to each crew as required.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A categorized set of outputs tailored for each crew, including critical details 
+    relevant to their tasks and responsibilities. It must provide an IncidenceMedicalReport, IncidencePoliceReport and IncidenceFireReport. 
+    If nobody is injured, then IncidenceMedicalReport will not be necessary.
+  schema:
+  agent: dispatcher
 
-reporting_task:
+craft_action_plan:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Combine proposals from all crews and create a comprehensive action plan.
+    Ensure the plan is reviewed and finalized with human input before sharing.
+  steps: >
+    1. Wait for the crews to finalize their proposals.  
+    2. Aggregate the information received into a cohesive action plan proposal.  
+    3. Submit the draft action plan for human review and adjustments.  
+    4. Finalize the action plan in markdown format.
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A well-structured action plan in markdown format that incorporates all crew proposals 
+    and human-reviewed adjustments, ready for implementation, following the FinalPlan schema.
+  schema: FinalPlan
+  agent: dispatcher
