@@ -4,9 +4,8 @@ handle_fire_people_report:
   steps: >
     1. Read Dispatcher Pydantic output for the Fire people crew.  
     2. Contact both the Firefighter and the Rescuer agents (in parallel) to gather information about the available resources.  
-    3. Consolidate this information for crafting the Fire people action plan.
   expected_output: >
-    A comprehensive report on resource allocation from both the Firefighter and Rescuer agents, ready for inclusion in the action plan.
+    Information about the necessities of the emergency in terms of firefighting and rescuing to obtain the best resource allocation from both the Firefighter and Rescuer agents.
   schema:
     agent: commander
 
