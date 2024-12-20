@@ -2,7 +2,6 @@
 import sys
 import warnings
 
-from emergency_solver.crew import EmergencySolver
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
