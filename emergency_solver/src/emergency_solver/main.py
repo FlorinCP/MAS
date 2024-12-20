@@ -1,57 +1,69 @@
 #!/usr/bin/env python
-import sys
-import warnings
+from random import randint
+
+from pydantic import BaseModel
+
+from crewai.flow.flow import Flow, listen, start, router
+
+from emergency_solver.src.emergency_solver.crews.emergency_crew import EmergencyCrew
+from emergency_solver.src.emergency_solver.crews.fire_crew import FireCrew
+from emergency_solver.src.emergency_solver.crews.medical_crew import MedicalCrew
+from emergency_solver.src.emergency_solver.crews.police_crew import PoliceCrew
 
 
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
-
-def run():
-    """
-    Run the crew.
-    """
-    inputs = {
-        'topic': 'AI LLMs'
-    }
-    EmergencySolver().crew().kickoff(inputs=inputs)
+class EmergencyState(BaseModel):
+    incidence_reports: dict[str, BaseModel]
+    plans: dict[str, BaseModel]
 
 
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs"
-    }
-    try:
-        EmergencySolver().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+class EmergencyFlow(Flow[EmergencyState]):
 
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
+    @start()
+    def handle_emergency(self):
+        print("Handling emergency report and generating incidence reports for each crew")
+        result = (EmergencyCrew.crew().kickoff())
+        self.state.incidence_reports = result
 
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        EmergencySolver().crew().replay(task_id=sys.argv[1])
+    @router(handle_emergency)
+    def distribute(self):
+        print("Distributing tasks to crews")
+        if self.state.incidence_reports.medical is not None:
+            result = (
+                MedicalCrew()
+                .crew()
+                .kickoff(inputs={"sentence_count": self.state.sentence_count})
+            )
+        elif self.state.incidence_reports.police is not None:
+            result = (
+                PoliceCrew()
+                .crew()
+                .kickoff(inputs={"sentence_count": self.state.sentence_count})
+            )
+        elif self.state.incidence_reports.fire is not None:
+            result = (
+                FireCrew()
+                .crew()
+                .kickoff(inputs={"sentence_count": self.state.sentence_count})
+            )
 
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+        self.state.plans = result.raw
 
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs"
-    }
-    try:
-        EmergencySolver().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
+    @listen(distribute)
+    def action_plan(self):
+        print("Crafting final Action Plan")
+        with open("final_plan.md", "w") as f:
+            f.write(self.state.plan)
 
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+
+def kickoff():
+    emergency_flow = EmergencyFlow()
+    emergency_flow.kickoff()
+
+
+def plot():
+    emergency_flow = EmergencyFlow()
+    emergency_flow.plot()
+
+
+if __name__ == "__main__":
+    kickoff()
