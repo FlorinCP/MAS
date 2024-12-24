@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 
 
 class IncidenceMedicalReport(BaseModel):
@@ -63,9 +63,9 @@ class IncidencePoliceReport(BaseModel):
 
 class GeneralIncidenceReport(BaseModel):
     """Combined output for the Handle emergency report task."""
-    medical: IncidenceMedicalReport = Field(None, description='Medical incidence report.')
-    fire: IncidenceFireReport = Field(None, description='Fire incidence report.')
-    police: IncidencePoliceReport = Field(None, description='Police incidence report.')
+    medical: Optional[IncidenceMedicalReport] = Field(None, description='Medical incidence report.')
+    fire: Optional[IncidenceFireReport] = Field(None, description='Fire incidence report.')
+    police: Optional[IncidencePoliceReport] = Field(None, description='Police incidence report.')
 
     @classmethod
     def get_schema(cls) -> str:
