@@ -1,5 +1,6 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task, output_pydantic
+import litellm
 
 from emergency_solver.schemas.schemas import PolicePlan
 
@@ -9,6 +10,10 @@ from emergency_solver.schemas.schemas import PolicePlan
 
 # Check our tools documentations for more information on how to use them
 # from crewai_tools import SerperDevTool
+
+llm = LLM(
+	model='ollama/llama3.1'
+)
 
 @CrewBase
 class PoliceCrew():
@@ -21,6 +26,7 @@ class PoliceCrew():
 	def police(self) -> Agent:
 		return Agent(
 			config=self.agents_config['police'],
+			llm=llm,
 			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
 			verbose=True
 		)
@@ -29,6 +35,7 @@ class PoliceCrew():
 	def allocator(self) -> Agent:
 		return Agent(
 			config=self.agents_config['allocator'],
+			llm=llm,
 			verbose=True
 		)
 

@@ -1,5 +1,6 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
+import litellm
 
 from emergency_solver.schemas.schemas import FirefightingPlan, MedicalPlan
 
@@ -9,6 +10,10 @@ from emergency_solver.schemas.schemas import FirefightingPlan, MedicalPlan
 
 # Check our tools documentations for more information on how to use them
 # from crewai_tools import SerperDevTool
+
+llm = LLM(
+	model='ollama/llama3.1'
+)
 
 @CrewBase
 class MedicalCrew():
@@ -21,6 +26,7 @@ class MedicalCrew():
 	def doctor(self) -> Agent:
 		return Agent(
 			config=self.agents_config['doctor'],
+			llm=llm,
 			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
 			verbose=True
 		)
@@ -29,6 +35,7 @@ class MedicalCrew():
 	def ambulance_technician(self) -> Agent:
 		return Agent(
 			config=self.agents_config['ambulance_technician'],
+			llm=llm,
 			verbose=True
 		)
 
