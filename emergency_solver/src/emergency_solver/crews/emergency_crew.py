@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task, output_pydantic
 
-from emergency_solver.src.emergency_solver.schemas.schemas import *
+from emergency_solver.schemas.schemas import *
 
 
 # Uncomment the following line to use an example of a custom tool
@@ -29,11 +29,8 @@ class EmergencyCrew():
 	def handle_emergency_report(self) -> Task:
 		return Task(
 			config=self.tasks_config['handle_emergency_report'],
-			output_pydantic={
-				'medical': IncidenceMedicalReport,
-				'fire': IncidenceFireReport,
-				'police': IncidencePoliceReport
-			})
+			output_pydantic= GeneralIncidenceReport
+		)
 
 	@task
 	def craft_action_plan(self) -> Task:

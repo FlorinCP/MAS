@@ -5,23 +5,23 @@ from pydantic import BaseModel
 
 from crewai.flow.flow import Flow, listen, start, router
 
-from emergency_solver.src.emergency_solver.crews.emergency_crew import EmergencyCrew
-from emergency_solver.src.emergency_solver.crews.fire_crew import FireCrew
-from emergency_solver.src.emergency_solver.crews.medical_crew import MedicalCrew
-from emergency_solver.src.emergency_solver.crews.police_crew import PoliceCrew
+from emergency_solver.crews.emergency_crew import EmergencyCrew
+from emergency_solver.crews.fire_crew import FireCrew
+from emergency_solver.crews.medical_crew import MedicalCrew
+from emergency_solver.crews.police_crew import PoliceCrew
 
 
 class EmergencyState(BaseModel):
-    incidence_reports: dict[str, BaseModel]
-    plans: dict[str, BaseModel]
-
+    incidence_reports: dict[str, BaseModel] = {}
+    plans: dict[str, BaseModel] = {}
 
 class EmergencyFlow(Flow[EmergencyState]):
 
     @start()
     def handle_emergency(self):
         print("Handling emergency report and generating incidence reports for each crew")
-        result = (EmergencyCrew.crew().kickoff())
+        emergency_crew = EmergencyCrew()
+        result = (emergency_crew.crew().kickoff())
         self.state.incidence_reports = result
 
     @router(handle_emergency)

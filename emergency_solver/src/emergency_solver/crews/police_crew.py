@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task, output_pydantic
 
-from emergency_solver.src.emergency_solver.schemas.schemas import PolicePlan
+from emergency_solver.schemas.schemas import PolicePlan
 
 
 # Uncomment the following line to use an example of a custom tool

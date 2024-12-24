@@ -61,6 +61,18 @@ class IncidencePoliceReport(BaseModel):
             schema += f'{field_name}, described as: {field_instance.description}\n'
         return schema
 
+class GeneralIncidenceReport(BaseModel):
+    """Combined output for the Handle emergency report task."""
+    medical: IncidenceMedicalReport = Field(None, description='Medical incidence report.')
+    fire: IncidenceFireReport = Field(None, description='Fire incidence report.')
+    police: IncidencePoliceReport = Field(None, description='Police incidence report.')
+
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
 
 class MedicalPlan(BaseModel):
     """Output for the Craft medical crew action plan task."""

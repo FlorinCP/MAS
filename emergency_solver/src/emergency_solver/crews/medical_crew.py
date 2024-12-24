@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-from emergency_solver.src.emergency_solver.schemas.schemas import FirefightingPlan, MedicalPlan
+from emergency_solver.schemas.schemas import FirefightingPlan, MedicalPlan
 
 
 # Uncomment the following line to use an example of a custom tool
