@@ -1,0 +1,51 @@
+[
+    {
+        "id": "fire_station_1",
+        "name": "Estación de bomberos nº1",
+        "x_coordinate": 41.667446,
+        "y_coordinate": -0.875530,
+        "type": "rescue",
+        "capacity": 6,
+        "equipment": [
+            "firehose",
+            "extinguisher",
+            "cutting tool"
+        ]
+    },
+    {
+        "id": "fire_station_2",
+        "name": "Estación de nomberos nº2",
+        "x_coordinate": 41.653619,
+        "y_coordinate": -0.886452,
+        "type": "ladder",
+        "capacity": 4,
+        "equipment": [
+            "ladder",
+            "firehose"
+        ]
+    },
+    {
+        "id": "fire_station_3",
+        "name": "Estación de nomberos nº3",
+        "x_coordinate": 41.6386714,
+        "y_coordinate": -0.8995760,
+        "type": "ladder",
+        "capacity": 4,
+        "equipment": [
+            "ladder",
+            "firehose"
+        ]
+    },
+    {
+        "id": "fire_station_4",
+        "name": "Estación de nomberos nº4",
+        "x_coordinate": 41.7189209,
+        "y_coordinate": -1.0261514,
+        "type": "ladder",
+        "capacity": 4,
+        "equipment": [
+            "ladder",
+            "firehose"
+        ]
+    }
+]

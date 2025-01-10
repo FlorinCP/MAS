@@ -1,0 +1,67 @@
+[
+    {
+        "id": "hospital_1",
+        "name": "Miguel Servet",
+        "x_coordinate": 41.6353637,
+        "y_coordinate": -0.9008551,
+        "beds_available": 50,
+        "specialties": [
+            "emergency",
+            "trauma",
+            "surgery"
+        ],
+        "status": "operational"
+    },
+    {
+        "id": "hospital_2",
+        "name": "Royo Vilanova",
+        "x_coordinate": 41.692070,
+        "y_coordinate": -0.861076,
+        "beds_available": 100,
+        "specialties": [
+            "pediatrics",
+            "orthopedics",
+            "intensive care"
+        ],
+        "status": "operational"
+    },
+    {
+        "id": "hospital_3",
+        "name": "Hospital provincial",
+        "x_coordinate": 41.652104,
+        "y_coordinate": -0.887133,
+        "beds_available": 60,
+        "specialties": [
+            "pediatrics",
+            "orthopedics",
+            "intensive care"
+        ],
+        "status": "operational"
+    },
+    {
+        "id": "hospital_3",
+        "name": "Hospital Clínico",
+        "x_coordinate": 41.6437914,
+        "y_coordinate": -0.9034796,
+        "beds_available": 30,
+        "specialties": [
+            "pediatrics",
+            "orthopedics",
+            "intensive care"
+        ],
+        "status": "operational"
+    },
+    {
+        "id": "hospital_3",
+        "name": "Hospital Quirón La Floresta",
+        "x_coordinate": 41.639890,
+        "y_coordinate": -0.918408,
+        "beds_available": 20,
+        "specialties": [
+            "pediatrics",
+            "orthopedics",
+            "intensive care"
+        ],
+        "status": "operational"
+    }
+]

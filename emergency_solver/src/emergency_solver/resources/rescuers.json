@@ -1,0 +1,134 @@
+[
+    {
+        "id": "rescuer_1",
+        "role": "rescuer",
+        "fire_station_id": "fire_station_1",
+        "equipment": [
+            "defibrillator",
+            "first aid kit",
+            "oxygen tank"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "rescuer_2",
+        "role": "firefighter",
+        "fire_station_id": "fire_station_1",
+        "equipment": [
+            "firehose",
+            "fireproof suit",
+            "ax"
+        ],
+        "status": "on_scene"
+    },
+    {
+        "id": "rescuer_3",
+        "role": "firefighter",
+        "fire_station_id": "fire_station_2",
+        "equipment": [
+            "firehose",
+            "fireproof suit",
+            "ladder"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "rescuer_4",
+        "role": "rescuer",
+        "fire_station_id": "fire_station_2",
+        "equipment": [
+            "first aid kit",
+            "oxygen mask",
+            "stretcher"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "rescuer_5",
+        "role": "firefighter",
+        "fire_station_id": "fire_station_3",
+        "equipment": [
+            "firehose",
+            "fireproof suit",
+            "helmet"
+        ],
+        "status": "on_scene"
+    },
+    {
+        "id": "rescuer_6",
+        "role": "rescuer",
+        "fire_station_id": "fire_station_3",
+        "equipment": [
+            "defibrillator",
+            "first aid kit",
+            "oxygen tank"
+        ],
+        "status": "on_scene"
+    },
+    {
+        "id": "rescuer_7",
+        "role": "firefighter",
+        "fire_station_id": "fire_station_4",
+        "equipment": [
+            "firehose",
+            "fireproof suit",
+            "thermal imaging camera"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "rescuer_8",
+        "role": "firefighter",
+        "fire_station_id": "fire_station_4",
+        "equipment": [
+            "ladder",
+            "fireproof suit",
+            "hydrant wrench"
+        ],
+        "status": "on_scene"
+    },
+    {
+        "id": "rescuer_9",
+        "role": "rescuer",
+        "fire_station_id": "fire_station_4",
+        "equipment": [
+            "first aid kit",
+            "oxygen tank",
+            "stretcher"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "rescuer_10",
+        "role": "firefighter",
+        "fire_station_id": "fire_station_3",
+        "equipment": [
+            "firehose",
+            "fireproof suit",
+            "ax"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "rescuer_11",
+        "role": "rescuer",
+        "fire_station_id": "fire_station_1",
+        "equipment": [
+            "defibrillator",
+            "stretcher",
+            "oxygen tank"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "rescuer_12",
+        "role": "firefighter",
+        "fire_station_id": "fire_station_2",
+        "equipment": [
+            "firehose",
+            "fireproof suit",
+            "helmet"
+        ],
+        "status": "on_scene"
+    }
+]
