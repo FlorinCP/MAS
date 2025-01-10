@@ -2,7 +2,8 @@ from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 
 from emergency_solver.src.emergency_solver.schemas.schemas import GeneralIncidenceReport, FinalPlan
-from emergency_solver.src.emergency_solver.tools.custom_tool import ReadEmergencyReport, CraftGeneralIncidenceReport
+from emergency_solver.src.emergency_solver.tools.custom_tool import ReadEmergencyReport
+
 
 llm = LLM(
 	model='ollama/llama3.1'
@@ -10,28 +11,28 @@ llm = LLM(
 
 
 @CrewBase
-class EmergencyCrew():
+class CombinerCrew():
 	"""Emergency crew"""
 
-	agents_config = 'config/emergency_agents.yaml'
-	tasks_config = 'config/emergency_tasks.yaml'
+	agents_config = 'config/combiner_agents.yaml'
+	tasks_config = 'config/combiner_tasks.yaml'
 
 	@agent
-	def dispatcher(self) -> Agent:
+	def combiner(self) -> Agent:
 		return Agent(
-			config=self.agents_config['dispatcher'],
+			config=self.agents_config['combiner'],
 			llm=llm,
 			verbose=True
 		)
 
-	@task
-	def handle_emergency_report(self) -> Task:
-		return Task(
-			config=self.tasks_config['handle_emergency_report'],
-			tools=[ReadEmergencyReport(), CraftGeneralIncidenceReport(result_as_answer=True)],
-			output_pydantic = GeneralIncidenceReport
-		)
 
+	@task
+	def craft_action_plan(self) -> Task:
+		return Task(
+			config=self.tasks_config['craft_action_plan'],
+			output_pydantic=FinalPlan,
+			human_input=True
+		)
 
 	@crew
 	def crew(self) -> Crew:

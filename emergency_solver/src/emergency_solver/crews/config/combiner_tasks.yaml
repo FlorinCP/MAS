@@ -1,0 +1,14 @@
+craft_action_plan:
+  description: >
+    Combine proposals from all crews and create a comprehensive action plan. This information is provided in {plans}.
+    Ensure the plan is reviewed and finalized with human input before sharing.
+  steps: >
+    1. Wait for the crews to finalize their proposals.  
+    2. Aggregate the information received into a cohesive action plan proposal.  
+    3. Submit the draft action plan for human review and adjustments.  
+    4. Finalize the action plan in markdown format.
+  expected_output: >
+    A well-structured action plan in markdown format that incorporates all crew proposals 
+    and human-reviewed adjustments, ready for implementation, following the FinalPlan schema.
+  schema: FinalPlan
+  agent: combiner

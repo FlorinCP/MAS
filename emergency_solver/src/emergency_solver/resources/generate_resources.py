@@ -1,6 +1,6 @@
 import json
 
-# Sample data for hospitals, fire stations, and police stations
+# Sample data for hospitals, fire stations, police stations, and rescuers (as a separate section)
 resources = {
     "hospitals": [
         {
@@ -57,6 +57,35 @@ resources = {
             "specialties": ["patrol", "investigation"],
             "status": "operational"
         }
+    ],
+    "rescuers": [  # Separate section for rescuers
+        {
+            "id": "rescuer_1",
+            "role": "paramedic",
+            "fire_station_id": "fire_station_1",  # Reference to the fire station
+            "x_coordinate": 41.6585000,
+            "y_coordinate": -0.8603000,
+            "equipment": ["defibrillator", "first aid kit", "oxygen tank"],
+            "status": "available"
+        },
+        {
+            "id": "rescuer_2",
+            "role": "firefighter",
+            "fire_station_id": "fire_station_1",  # Reference to the fire station
+            "x_coordinate": 41.6602000,
+            "y_coordinate": -0.8609000,
+            "equipment": ["firehose", "fireproof suit", "ax"],
+            "status": "on_scene"
+        },
+        {
+            "id": "rescuer_3",
+            "role": "firefighter",
+            "fire_station_id": "fire_station_2",  # Reference to the fire station
+            "x_coordinate": 41.6610000,
+            "y_coordinate": -0.8605000,
+            "equipment": ["firehose", "fireproof suit", "ladder"],
+            "status": "available"
+        }
     ]
 }
 
@@ -69,5 +98,6 @@ def write_to_json(data, filename):
 write_to_json(resources['hospitals'], 'hospitals.json')
 write_to_json(resources['fire_stations'], 'fire_stations.json')
 write_to_json(resources['police_stations'], 'police_stations.json')
+write_to_json(resources['rescuers'], 'rescuers.json')  # Saving the rescuers data
 
 print("JSON files created successfully!")

@@ -1,0 +1,206 @@
+[
+    {
+        "id": "medic_1",
+        "hospital_id": "hospital_1",
+        "name": "Dr. Ana García",
+        "specialty": "emergency",
+        "equipment": [
+            "stethoscope",
+            "syringe kit",
+            "BP monitor"
+        ],
+        "status": "on_duty"
+    },
+    {
+        "id": "medic_2",
+        "hospital_id": "hospital_1",
+        "name": "Dr. Luis Fernández",
+        "specialty": "trauma",
+        "equipment": [
+            "splint set",
+            "immobilization kit",
+            "portable ultrasound"
+        ],
+        "status": "on_duty"
+    },
+    {
+        "id": "medic_3",
+        "hospital_id": "hospital_1",
+        "name": "Nurse Carmen Sánchez",
+        "specialty": "emergency nursing",
+        "equipment": [
+            "sterile gloves",
+            "IV kit",
+            "wound care supplies"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "medic_4",
+        "hospital_id": "hospital_1",
+        "name": "Paramedic Roberto Díaz",
+        "specialty": "pre-hospital care",
+        "equipment": [
+            "defibrillator",
+            "first aid kit",
+            "oxygen mask"
+        ],
+        "status": "on_scene"
+    },
+    {
+        "id": "medic_5",
+        "hospital_id": "hospital_2",
+        "name": "Dr. Marta López",
+        "specialty": "pediatrics",
+        "equipment": [
+            "stethoscope",
+            "pulse oximeter",
+            "thermometer"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "medic_6",
+        "hospital_id": "hospital_2",
+        "name": "Dr. Jorge Martínez",
+        "specialty": "intensive care",
+        "equipment": [
+            "ventilator",
+            "syringe pump",
+            "ECG machine"
+        ],
+        "status": "on_duty"
+    },
+    {
+        "id": "medic_7",
+        "hospital_id": "hospital_2",
+        "name": "Psychologist Laura Ruiz",
+        "specialty": "mental health",
+        "equipment": [
+            "notepad",
+            "counseling guides",
+            "stress management tools"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "medic_8",
+        "hospital_id": "hospital_2",
+        "name": "Paramedic José Morales",
+        "specialty": "pre-hospital care",
+        "equipment": [
+            "oxygen tank",
+            "stretcher",
+            "first aid kit"
+        ],
+        "status": "on_duty"
+    },
+    {
+        "id": "medic_9",
+        "hospital_id": "hospital_3",
+        "name": "Dr. Elena Rodríguez",
+        "specialty": "orthopedics",
+        "equipment": [
+            "splint set",
+            "cast supplies",
+            "surgical tools"
+        ],
+        "status": "on_duty"
+    },
+    {
+        "id": "medic_10",
+        "hospital_id": "hospital_3",
+        "name": "Nurse Marcos Peña",
+        "specialty": "ICU nursing",
+        "equipment": [
+            "IV pump",
+            "monitoring equipment",
+            "ventilator support"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "medic_11",
+        "hospital_id": "hospital_3",
+        "name": "Psychologist Isabel Torres",
+        "specialty": "trauma counseling",
+        "equipment": [
+            "counseling guides",
+            "therapy tools",
+            "relaxation aids"
+        ],
+        "status": "on_scene"
+    },
+    {
+        "id": "medic_12",
+        "hospital_id": "hospital_3",
+        "name": "Paramedic Sergio López",
+        "specialty": "emergency response",
+        "equipment": [
+            "defibrillator",
+            "oxygen mask",
+            "first aid kit"
+        ],
+        "status": "on_duty"
+    },
+    {
+        "id": "medic_13",
+        "hospital_id": "hospital_3",
+        "name": "Nurse Clara Gutiérrez",
+        "specialty": "pediatric nursing",
+        "equipment": [
+            "thermometer",
+            "syringe kit",
+            "wound care supplies"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "medic_14",
+        "hospital_id": "hospital_4",
+        "name": "Dr. Andrés Vázquez",
+        "specialty": "intensive care",
+        "equipment": [
+            "ECG machine",
+            "ventilator",
+            "syringe pump"
+        ],
+        "status": "on_duty"
+    },
+    {
+        "id": "medic_15",
+        "hospital_id": "hospital_4",
+        "name": "Paramedic Laura Martín",
+        "specialty": "trauma response",
+        "equipment": [
+            "splint set",
+            "defibrillator",
+            "oxygen tank"
+        ],
+        "status": "on_scene"
+    },
+    {
+        "id": "medic_16",
+        "hospital_id": "hospital_4",
+        "name": "Psychologist Miguel Rivas",
+        "specialty": "emergency counseling",
+        "equipment": [
+            "stress management guides",
+            "notepad",
+            "therapy tools"
+        ],
+        "status": "available"
+    },
+    {
+        "id": "medic_17",
+        "hospital_id": "hospital_4",
+        "name": "Nurse Andrea Fernández",
+        "specialty": "emergency nursing",
+        "equipment": [
+            "sterile gloves",
+            "IV kit",
+            "wound care supplies"
+        ],
+        "status": "on_duty"
+    }
+]

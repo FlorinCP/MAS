@@ -30,8 +30,8 @@ class IncidenceFireReport(BaseModel):
     fire_type: str = Field(..., description='Type of fire (ordinary, electrical, gas, chemical).')
     severity: str = Field(..., description='Severity level of fire (low, medium, high).')
     wind_direction: str = Field(..., description='Wind direction (in the compass).')
-    wind_speed: str = Field(..., description='Wind speed (in kilometers/hour).')
-    affected_area: str = Field(..., description='Total area affected by the fire in square meters.')
+    wind_speed: int = Field(..., description='Wind speed (in kilometers/hour).')
+    affected_area: float = Field(..., description='Total area affected by the fire in square meters.')
     people_to_rescue: int = Field(..., description='Number of people that need to be rescued.')
     required_equipment: List[str] = Field(..., description='Equipment needed to extinguish the fire.')
 
@@ -142,3 +142,11 @@ class FinalPlan(BaseModel):
         for field_name, field_instance in cls.__fields__.items():
             schema += f'{field_name}, described as: {field_instance.description}\n'
         return schema
+
+
+class RouteDistanceSchema(BaseModel):
+    """Input for the RouteDistanceTool."""
+    x_origin: float = Field(..., description='X coordinate of the origin location.')
+    y_origin: float = Field(..., description='Y coordinate of the origin location.')
+    x_destination: float = Field(..., description='X coordinate of the destination location.')
+    y_destination: float = Field(..., description='Y coordinate of the destination location.')

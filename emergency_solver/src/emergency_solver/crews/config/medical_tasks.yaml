@@ -7,8 +7,7 @@ handle_medical_report:
     3. Contact the Ambulance technician with conclusions to ask for resource allocation.
   expected_output: >
     An assessment report and resource allocation request sent to the Ambulance technician, ready for crafting the action plan.
-  schema:
-    agent: doctor
+  agent: doctor
 
 craft_medical_action_plan:
   description: >
@@ -16,21 +15,20 @@ craft_medical_action_plan:
   steps: >
     1. Listen to the proposal of the Ambulance technician.  
     2. Create the Medical section of the action plan.  
-    3. Report the Medical action plan to the Dispatcher.
+    3. Report the MedicalPlan to the Dispatcher.
   expected_output: >
     A detailed Medical section of the action plan, validated and ready for submission to the Dispatcher.
-  schema:
-    agent: doctor
+  schema: MedicalPlan
+  agent: doctor
 
 allocate_medical_resources:
   description: >
-    Determine and allocate the necessary medical resources for the situation.
+    Determine and allocate the necessary medical resources for the situation. You must choose from the resources available in the {medical_resources} JSON file.
   steps: >
     1. Receive the recommendation from the Doctor.  
-    2. Read available medical resources.  
+    2. Read available medical resources from the {medical_resources} JSON file.  
     3. Decide which resources (ambulances, types, drugs, personnel) should be sent, including computing distances between the scene and the resource locations.  
     4. Send the final decision back to the Doctor.
-  expected_output: >
+  expected_output: > 
     A list of medical resources and their deployment plan, sent to the Doctor.
-  schema:
-    agent: ambulance_technician
+  agent: ambulance_technician

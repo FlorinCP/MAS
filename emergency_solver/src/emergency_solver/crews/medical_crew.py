@@ -1,9 +1,8 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-import litellm
 
-from emergency_solver.schemas.schemas import FirefightingPlan, MedicalPlan
-
+from emergency_solver.src.emergency_solver.schemas.schemas import MedicalPlan
+from emergency_solver.src.emergency_solver.tools.custom_tool import ReadResources, RouteDistanceTool
 
 # Uncomment the following line to use an example of a custom tool
 # from emergency_solver.tools.custom_tool import MyCustomTool
@@ -27,7 +26,6 @@ class MedicalCrew():
 		return Agent(
 			config=self.agents_config['doctor'],
 			llm=llm,
-			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
 			verbose=True
 		)
 
@@ -36,6 +34,7 @@ class MedicalCrew():
 		return Agent(
 			config=self.agents_config['ambulance_technician'],
 			llm=llm,
+			tools=[ReadResources(), RouteDistanceTool("zaragoza_graph.graphml")],
 			verbose=True
 		)
 

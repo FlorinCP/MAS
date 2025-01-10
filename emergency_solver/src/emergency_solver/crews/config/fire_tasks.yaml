@@ -26,7 +26,7 @@ allocate_fire_extinguishing_resources:
     Determine and allocate the necessary resources for fire-extinguishing operations.
   steps: >
     1. Receive the request from the Commander.  
-    2. Read available fire-extinguishing resources.  
+    2. Read available fire-extinguishing resources in the {fire_resources} file.  
     3. Decide which resources should be sent, including computing distances between the scene and the resource locations.  
     4. Send the final decision back to the Commander.
   expected_output: >
@@ -36,7 +36,7 @@ allocate_fire_extinguishing_resources:
 
 allocate_rescuing_resources:
   description: >
-    Decide and allocate the necessary resources for rescuing potential victims.
+    Decide and allocate the necessary resources for rescuing potential victims in the {rescue_resources} file.
   steps: >
     1. Receive the request from the Commander.  
     2. Read available rescuing resources.  

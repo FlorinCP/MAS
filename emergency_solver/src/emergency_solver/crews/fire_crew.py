@@ -1,9 +1,8 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-import litellm
 
-from emergency_solver.schemas.schemas import FirefightingPlan
-
+from emergency_solver.src.emergency_solver.schemas.schemas import FirefightingPlan
+from emergency_solver.src.emergency_solver.tools.custom_tool import ReadResources, RouteDistanceTool
 
 # Uncomment the following line to use an example of a custom tool
 # from emergency_solver.tools.custom_tool import MyCustomTool
@@ -36,6 +35,7 @@ class FireCrew():
 		return Agent(
 			config=self.agents_config['firefighter'],
 			llm=llm,
+			tools=[ReadResources(), RouteDistanceTool("zaragoza_graph.graphml")],
 			verbose=True
 		)
 
@@ -44,6 +44,7 @@ class FireCrew():
 		return Agent(
 			config=self.agents_config['rescuer'],
 			llm=llm,
+			tools=[ReadResources(), RouteDistanceTool("zaragoza_graph.graphml")],
 			verbose=True
 		)
 

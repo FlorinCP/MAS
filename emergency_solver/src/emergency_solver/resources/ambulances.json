@@ -1,0 +1,77 @@
+[
+    {
+        "id": "ambulance_1",
+        "hospital_id": "hospital_1",
+        "type": "basic life support",
+        "equipment": [
+            "oxygen tank",
+            "stretcher",
+            "first aid kit"
+        ],
+        "status": "available",
+        "current_location": {
+            "x_coordinate": 41.6353637,
+            "y_coordinate": -0.9008551
+        }
+    },
+    {
+        "id": "ambulance_2",
+        "hospital_id": "hospital_1",
+        "type": "advanced life support",
+        "equipment": [
+            "defibrillator",
+            "ventilator",
+            "IV equipment"
+        ],
+        "status": "on_scene",
+        "current_location": {
+            "x_coordinate": 41.6353637,
+            "y_coordinate": -0.9008551
+        }
+    },
+    {
+        "id": "ambulance_3",
+        "hospital_id": "hospital_2",
+        "type": "basic life support",
+        "equipment": [
+            "oxygen tank",
+            "stretcher",
+            "first aid kit"
+        ],
+        "status": "available",
+        "current_location": {
+            "x_coordinate": 41.692070,
+            "y_coordinate": -0.861076
+        }
+    },
+    {
+        "id": "ambulance_4",
+        "hospital_id": "hospital_2",
+        "type": "advanced life support",
+        "equipment": [
+            "defibrillator",
+            "ventilator",
+            "IV equipment"
+        ],
+        "status": "on_scene",
+        "current_location": {
+            "x_coordinate": 41.692070,
+            "y_coordinate": -0.861076
+        }
+    },
+    {
+        "id": "ambulance_5",
+        "hospital_id": "hospital_3",
+        "type": "basic life support",
+        "equipment": [
+            "oxygen tank",
+            "stretcher",
+            "first aid kit"
+        ],
+        "status": "available",
+        "current_location": {
+            "x_coordinate": 41.652104,
+            "y_coordinate": -0.887133
+        }
+    }
+]

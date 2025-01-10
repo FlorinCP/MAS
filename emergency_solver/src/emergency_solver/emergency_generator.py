@@ -33,7 +33,7 @@ def generate_markdown_emergency_report_with_map(graph) -> str:
     location_coords = (graph.nodes[location]['y'], graph.nodes[location]['x'])
 
     # Generar ID único para el incidente
-    incident_id = f"INC-{random.randint(1000, 9999)}"
+    incident_id = f"{random.randint(1000, 9999)}"
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Generar detalles para la sección Médica

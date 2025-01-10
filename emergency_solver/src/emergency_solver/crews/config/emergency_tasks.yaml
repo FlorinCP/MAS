@@ -1,31 +1,37 @@
 handle_emergency_report:
   description: >
-    Process the incoming emergency report by analyzing and classifying the data.
-    Ensure the information is categorized appropriately for each crew (Medical, Police, Fire) 
-    and dispatch the necessary output to the corresponding teams.
+    Process the emergency report provided in the MD file located at {emergency_report}.
+    This task involves reading, analyzing, and categorizing the data into structured sections
+    for the Medical, Police, and Fire crews. The output must be a well-structured instance 
+    of GeneralIncidenceReport, containing relevant information for each crew. If no injuries
+    are reported, the IncidenceMedicalReport section will be omitted. The task ensures 
+    data is classified accurately and sanitized for use in subsequent processing.
   steps: >
-    1. Read the emergency report.  
-    2. Parse and analyze the data provided in the report.  
-    3. Classify the information based on the crews involved (Medical, Police, Fire).  
-    4. Send the specific output or instructions to each crew as required.
+    1. Read and parse the emergency report using the ReadEmergencyReport tool.
+       - The input for this tool is the MD file located at {emergency_report}.
+       - Ensure the file is fully read and converted into a structured format.
+    2. Sanitize the parsed data:
+       - Remove unwanted characters such as "\\" or "/" from all dictionary elements to ensure compatibility
+         with tools and structured outputs.
+    3. Classify the information by crew (Medical, Police, Fire):
+       - Use the CraftGeneralIncidenceReport tool to analyze and categorize the data.
+       - Populate the fields for IncidenceMedicalReport, IncidencePoliceReport, and IncidenceFireReport
+         with the relevant details extracted from the emergency report.
+       - If no injuries are reported, omit the IncidenceMedicalReport section.
+    4. Construct the GeneralIncidenceReport:
+       - Combine the structured data for each crew into a single instance of GeneralIncidenceReport.
+       - Ensure that:
+         - `medical` includes an IncidenceMedicalReport if applicable.
+         - `fire` includes an IncidenceFireReport with fire-related details.
+         - `police` includes an IncidencePoliceReport with law enforcement-related data.
+    5. Return the completed GeneralIncidenceReport:
+       - Ensure the report includes all applicable sections and is ready for further processing.
   expected_output: >
-    A categorized set of outputs tailored for each crew, including critical details 
-    relevant to their tasks and responsibilities. It must provide an IncidenceMedicalReport, IncidencePoliceReport and IncidenceFireReport. 
-    If nobody is injured, then IncidenceMedicalReport will not be necessary.
-  schema:
-  agent: dispatcher
-
-craft_action_plan:
-  description: >
-    Combine proposals from all crews and create a comprehensive action plan.
-    Ensure the plan is reviewed and finalized with human input before sharing.
-  steps: >
-    1. Wait for the crews to finalize their proposals.  
-    2. Aggregate the information received into a cohesive action plan proposal.  
-    3. Submit the draft action plan for human review and adjustments.  
-    4. Finalize the action plan in markdown format.
-  expected_output: >
-    A well-structured action plan in markdown format that incorporates all crew proposals 
-    and human-reviewed adjustments, ready for implementation, following the FinalPlan schema.
-  schema: FinalPlan
+    A structured instance of GeneralIncidenceReport that includes the following:
+      - IncidenceMedicalReport: Details of medical incidents, if injuries are reported.
+      - IncidencePoliceReport: Information for law enforcement and crowd management.
+      - IncidenceFireReport: Details about fire-related incidents and required actions.
+    If no data is applicable for a specific crew (e.g., no injuries), the corresponding section
+    should be omitted to ensure relevance and conciseness.
+  schema: GeneralIncidenceReport
   agent: dispatcher
