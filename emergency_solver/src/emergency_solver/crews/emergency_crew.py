@@ -1,8 +1,8 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 
-from emergency_solver.src.emergency_solver.schemas.schemas import GeneralIncidenceReport, FinalPlan
-from emergency_solver.src.emergency_solver.tools.custom_tool import ReadEmergencyReport, CraftGeneralIncidenceReport
+from src.emergency_solver.schemas.schemas import GeneralIncidenceReport, FinalPlan
+from src.emergency_solver.tools.custom_tool import ReadEmergencyReport, CraftGeneralIncidenceReport
 
 llm = LLM(
 	model='ollama/llama3.1'

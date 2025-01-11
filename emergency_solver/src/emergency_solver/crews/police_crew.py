@@ -1,8 +1,8 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 
-from emergency_solver.src.emergency_solver.schemas.schemas import PolicePlan
-from emergency_solver.src.emergency_solver.tools.custom_tool import ReadResources, RouteDistanceTool
+from src.emergency_solver.schemas.schemas import PolicePlan
+from src.emergency_solver.tools.custom_tool import ReadResources, RouteDistanceTool
 
 # Uncomment the following line to use an example of a custom tool
 # from emergency_solver.tools.custom_tool import MyCustomTool

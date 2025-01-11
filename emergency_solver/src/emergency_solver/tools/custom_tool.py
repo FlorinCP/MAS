@@ -1,14 +1,16 @@
 from crewai.tools import BaseTool
-from typing import Type
+from typing import Type, Dict, Any
 from pydantic import BaseModel, Field
 import json
 import osmnx as ox
-from emergency_solver.src.emergency_solver.schemas.schemas import RouteDistanceSchema, GeneralIncidenceReport, \
+from src.emergency_solver.schemas.schemas import RouteDistanceSchema, GeneralIncidenceReport, \
     IncidencePoliceReport, IncidenceFireReport, IncidenceMedicalReport
 import networkx
 
 from crewai_tools import BaseTool
 from typing import Optional, Type
+
+from src.emergency_solver.utils.report_parser import EmergencyReportParser
 
 class MyCustomToolInput(BaseModel):
     """Input schema for MyCustomTool."""
@@ -25,77 +27,6 @@ class ComputeDistance(BaseTool):
         # Implementation goes here
         return "this is an example of a tool output, ignore it and move along."
 
-class ReadEmergencyReport(BaseTool):
-    name: str = "Emergency report reader"
-    description: str = (
-        "Tool that allows to read the initial Emergency report by the Dispatcher in MD format. It requires the path of the emergency report file."
-    )
-
-    def _run(self, path: str) -> str:
-        with open(path, "r", encoding="utf-8") as file:
-            return file.read()
-
-class CraftGeneralIncidenceReport(BaseTool):
-    name: str = "General incidence report"
-    description: str = (
-        "Tool that allows generating the GeneralIncidenceReport based on the information obtained from the emergency report."
-        "It receives the emergency report as a dictionary and returns a GeneralIncidenceReport instance with the parsed medical,"
-        "fire and police information."
-    )
-
-    def _run(self, emergency_report: dict) -> GeneralIncidenceReport:
-        """
-        Generates a GeneralIncidenceReport based on the provided emergency report.
-
-        Args:
-            emergency_report (dict): A dictionary containing detailed information about the emergency.
-
-        Returns:
-            GeneralIncidenceReport: An instance of the GeneralIncidenceReport with the populated data.
-        """
-        general = GeneralIncidenceReport()
-        print(emergency_report)
-        # Parse and populate medical report if present
-        if "Medical Crew" in emergency_report:
-            general.medical = IncidenceMedicalReport(
-                emergency_id=emergency_report["Incident ID"],
-                location=emergency_report["Location"],
-                date=emergency_report["Timestamp"],
-                injured_people=emergency_report["Medical Crew"]["Number of Injured People"],
-                severity="high",  # Assuming severity from injuries provided
-                dest_hospital="Hospital A",  # Placeholder destination hospital
-                dist_to_hospital=5.0  # Placeholder distance in kilometers
-            )
-
-        # Parse and populate fire report if present
-        if "Fire Crew" in emergency_report:
-            general.fire = IncidenceFireReport(
-                emergency_id=emergency_report["Incident ID"],
-                location=emergency_report["Location"],
-                date=emergency_report["Timestamp"],
-                fire_type=emergency_report["Fire Crew"]["Fire Level (1-5)"],
-                severity="medium",  # From fire level provided
-                wind_direction=emergency_report["Fire Crew"]["Wind Direction"],
-                wind_speed=emergency_report["Fire Crew"]["Wind Speed (km/h)"],
-                affected_area=emergency_report["Fire Crew"]["Affected Area (m²)"],
-                people_to_rescue=emergency_report["Fire Crew"]["People Needing Rescue"],
-                required_equipment=["Fire truck", "Ladder", "Extinguisher"]  # Placeholder equipment
-            )
-
-        # Parse and populate police report if present
-        if "Police Crew" in emergency_report:
-            general.police = IncidencePoliceReport(
-                emergency_id=emergency_report["Incident ID"],
-                location=emergency_report["Location"],
-                date=emergency_report["Timestamp"],
-                affected_streets=[],  # No street details provided
-                traffic_status=emergency_report["Police Crew"]["Traffic Status"],
-                crowd_size=emergency_report["Police Crew"]["Crowd Size"]
-            )
-
-        return general
-
-
 class ReadResources(BaseTool):
     name: str = "Resource file reader"
     description: str = (
@@ -105,8 +36,6 @@ class ReadResources(BaseTool):
     def _run(self, argument: str) -> str:
         with open(argument, "r", encoding="utf-8") as file:
             return json.load(file)
-
-
 
 class RouteDistanceTool(BaseTool):
     name: str = 'Route distance calculator'
@@ -141,3 +70,142 @@ class RouteDistanceTool(BaseTool):
         edge_lengths = ox.routing.route_to_gdf(self.city_map, route)['length']
 
         return round(sum(edge_lengths))
+
+
+from crewai.tools import BaseTool
+from typing import Dict, Any
+from datetime import datetime
+from src.emergency_solver.schemas.schemas import (
+    GeneralIncidenceReport,
+    IncidenceMedicalReport,
+    IncidenceFireReport,
+    IncidencePoliceReport
+)
+
+
+class ReadEmergencyReport(BaseTool):
+    name: str = "Emergency report reader"
+    description: str = "Tool that reads the initial Emergency report in MD format."
+
+    def _run(self, path: str) -> str:
+        """
+        Simply reads the emergency report file and returns its contents.
+        The parsing will be done by the CraftGeneralIncidenceReport tool.
+        """
+        with open(path, "r", encoding="utf-8") as file:
+            return file.read()
+
+
+class CraftGeneralIncidenceReport(BaseTool):
+    name: str = "General incidence report"
+    description: str = (
+        "Tool that allows generating the GeneralIncidenceReport based on the information "
+        "obtained from the emergency report."
+    )
+
+    def parse_markdown_to_dict(self, markdown_content: str) -> Dict[str, Any]:
+        """
+        Converts markdown formatted emergency report into a structured dictionary.
+        """
+        sections = {}
+        current_section = None
+        section_data = {}
+
+        for line in markdown_content.split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+
+            # Handle section headers (e.g., "## Incident Information")
+            if line.startswith('## '):
+                if current_section and section_data:
+                    sections[current_section] = section_data
+                current_section = line.strip('# ')
+                section_data = {}
+
+            # Handle data lines (e.g., "- **Incident ID:** 2855")
+            elif line.startswith('- **') and current_section:
+                try:
+                    # Split the line into key and value
+                    key_value = line.strip('- **').split(':**')
+                    if len(key_value) == 2:
+                        key = key_value[0].strip()
+                        value = key_value[1].strip()
+                        section_data[key] = value
+                except Exception as e:
+                    print(f"Error parsing line '{line}': {str(e)}")
+
+        # Add the last section
+        if current_section and section_data:
+            sections[current_section] = section_data
+
+        return sections
+
+    def _run(self, emergency_report: str) -> GeneralIncidenceReport:
+        """
+        Creates a GeneralIncidenceReport from the markdown emergency report.
+        """
+        try:
+            # First parse the markdown into a structured dictionary
+            parsed_data = self.parse_markdown_to_dict(emergency_report)
+
+            # Extract core information
+            incident_info = parsed_data.get('Incident Information', {})
+            incident_id = int(incident_info.get('Incident ID', 0))
+            timestamp = incident_info.get('Timestamp', '')
+            location = incident_info.get('Location', '')
+
+            # Create date object
+            date = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
+
+            # Process Medical Report
+            medical_report = None
+            if medical_data := parsed_data.get('Medical Crew'):
+                medical_report = IncidenceMedicalReport(
+                    emergency_id=incident_id,
+                    location=str(location),  # Ensure location is string
+                    date=date,
+                    injured_people=int(medical_data.get('Number of Injured People', 0)),
+                    severity='medium',  # Default severity
+                    dest_hospital='TBD',  # To be determined
+                    dist_to_hospital=0.0  # To be calculated
+                )
+
+            # Process Fire Report
+            fire_report = None
+            if fire_data := parsed_data.get('Fire Crew'):
+                fire_report = IncidenceFireReport(
+                    emergency_id=incident_id,
+                    location=str(location),
+                    date=date,
+                    fire_type=fire_data.get('Fire Nature', 'unknown'),
+                    severity=fire_data.get('Fire Level (1-5)', 'low'),
+                    wind_direction=fire_data.get('Wind Direction', 'unknown'),
+                    wind_speed=int(fire_data.get('Wind Speed (km/h)', 0)),
+                    affected_area=float(fire_data.get('Affected Area (m²)', 0)),
+                    people_to_rescue=int(fire_data.get('People Needing Rescue', 0)),
+                    required_equipment=['Fire truck', 'Ladder', 'Extinguisher']
+                )
+
+            # Process Police Report
+            police_report = None
+            if police_data := parsed_data.get('Police Crew'):
+                police_report = IncidencePoliceReport(
+                    emergency_id=incident_id,
+                    location=str(location),
+                    date=date,
+                    affected_streets=[],  # To be determined by police
+                    traffic_status=police_data.get('Traffic Status', 'unknown'),
+                    crowd_size=int(police_data.get('Crowd Size', 0))
+                )
+
+            # Create and return the complete report
+            return GeneralIncidenceReport(
+                medical=medical_report,
+                fire=fire_report,
+                police=police_report
+            )
+
+        except Exception as e:
+            print(f"Error creating general incidence report: {str(e)}")
+            raise

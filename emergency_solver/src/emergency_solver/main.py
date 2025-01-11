@@ -4,12 +4,12 @@ from pydantic import BaseModel
 
 from crewai.flow.flow import Flow, listen, start, router
 
-from emergency_solver.src.emergency_solver.crews.combiner_crew import CombinerCrew
-from emergency_solver.src.emergency_solver.crews.emergency_crew import EmergencyCrew
-from emergency_solver.src.emergency_solver.crews.fire_crew import FireCrew
-from emergency_solver.src.emergency_solver.crews.medical_crew import MedicalCrew
-from emergency_solver.src.emergency_solver.crews.police_crew import PoliceCrew
-from emergency_solver.src.emergency_solver.schemas.schemas import GeneralIncidenceReport
+from src.emergency_solver.crews.combiner_crew import CombinerCrew
+from src.emergency_solver.crews.emergency_crew import EmergencyCrew
+from src.emergency_solver.crews.fire_crew import FireCrew
+from src.emergency_solver.crews.medical_crew import MedicalCrew
+from src.emergency_solver.crews.police_crew import PoliceCrew
+from src.emergency_solver.schemas.schemas import GeneralIncidenceReport
 
 
 class EmergencyState(BaseModel):
