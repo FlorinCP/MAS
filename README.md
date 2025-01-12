@@ -6,7 +6,7 @@ A Multi-Agent System for coordinating emergency responses in Zaragoza, Spain. Th
 
 - Coordinate multiple emergency response crews (Fire, Medical, Police)
 - Real-time distance calculations using OSMnx
-- Intelligent resource allocation
+- Efficient resource allocation
 - Customizable emergency scenarios
 - Comprehensive reporting system
 
@@ -42,20 +42,6 @@ curl https://ollama.ai/install.sh | sh
 ollama pull llama3.1
 ```
 
-## Configuration
-
-1. Create necessary configuration files:
-```bash
-cp .env.example .env
-```
-
-2. Update the configuration files in the `config/` directory as needed:
-- `emergency_agents.yaml`
-- `fire_agents.yaml`
-- `medical_agents.yaml`
-- `police_agents.yaml`
-- `combiner_agents.yaml`
-
 ## Usage
 
 1. Generate an emergency report:
@@ -72,39 +58,25 @@ python src/main.py
 
 ```
 src/
-├── emergency_solver/   # Main package
-│   ├── crews/         # Agent crews
+├── emergency_solver/  # Main package
+│   ├── crews/         # Agent crews and their specification
+│   │   ├── config/    # Agent configuration files (tasks and agents)
+│   ├── resources/     # JSON resource files
 │   ├── schemas/       # Pydantic models
 │   └── tools/         # Custom tools
-├── config/            # Configuration files
-└── data/              # Resource data
+├── emergency_generator.py  # Emergency report generator
+└── main.py                 # Main file from which the MAS is kicked off
 ```
-
-## Testing
-
-Run the test suite:
-```bash
-pytest tests/
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Authors
 
-- [Your Name]
-- [Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
+- Florin Cosmin Peana
+- Ignacio Miguel Rodríguez
+- Mar Vidal Cid
+- Hugo Prieto Tarrega
 
 ## Acknowledgments
 
