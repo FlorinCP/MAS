@@ -1,16 +1,17 @@
 from datetime import datetime
 
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Optional, Union, Tuple
 
 
 class IncidenceMedicalReport(BaseModel):
     """Output for the Handle emergency report task."""
     emergency_id: int = Field(..., description='Unique identifier for the emergency.')
-    location: str = Field(..., description='Address of the emergency.')
+    coordinates: Tuple[float, float] = Field(..., description='Coordinates of the emergency.')
+    node_id: int = Field(..., description='Unique identifier for the node.')
     date: datetime = Field(..., description='Date with time of the incident.')
     injured_people: int = Field(..., description='Number of injured people.')
-    severity: str = Field(..., description='Severity level of injuries (low, medium, high).')
+    severity: int = Field(..., description='Severity level of injuries (0-10).')
     dest_hospital: str = Field(..., description='Assigned hospital for transporting patients.')
     dist_to_hospital: float = Field(..., description='Distance to the assigned hospital in kilometers.')
 
@@ -25,7 +26,8 @@ class IncidenceMedicalReport(BaseModel):
 class IncidenceFireReport(BaseModel):
     """Output for the Handle emergency report task."""
     emergency_id: int = Field(..., description='Unique identifier for the emergency.')
-    location: str = Field(..., description='Address of the emergency.')
+    coordinates: Tuple[float, float] = Field(..., description='Coordinates of the emergency.')
+    node_id: int = Field(..., description='Unique identifier for the node.')
     date: datetime = Field(..., description='Date with time of the incident.')
     fire_type: str = Field(..., description='Type of fire (ordinary, electrical, gas, chemical).')
     severity: str = Field(..., description='Severity level of fire (low, medium, high).')
@@ -46,7 +48,8 @@ class IncidenceFireReport(BaseModel):
 class IncidencePoliceReport(BaseModel):
     """Output for the Handle emergency report task."""
     emergency_id: int = Field(..., description='Unique identifier for the emergency.')
-    location: str = Field(..., description='Address of the emergency.')
+    coordinates: Tuple[float, float] = Field(..., description='Coordinates of the emergency.')
+    node_id: int = Field(..., description='Unique identifier for the node.')
     date: datetime = Field(..., description='Date with time of the incident.')
     affected_streets: List[str] = Field(...,
                                         description='List of streets impacted by the emergency that may require closure.')
@@ -134,7 +137,7 @@ class FinalPlan(BaseModel):
     date: datetime = Field(..., description='Date with time of the incident.')
     police_plan: PolicePlan = Field(..., description='Police strategy for the final plan.')
     firefighting_plan: FirefightingPlan = Field(..., description='Firefighting strategy for the final plan.')
-    medical_plan: FirefightingPlan | None = Field(..., description='Medical strategy for the final plan.')
+    medical_plan: Union[MedicalPlan, None] = Field(..., description='Medical strategy for the final plan.')
 
     @classmethod
     def get_schema(cls) -> str:

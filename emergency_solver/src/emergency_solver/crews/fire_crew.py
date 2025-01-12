@@ -58,7 +58,6 @@ class FireCrew():
 	def craft_fire_people_action_plan(self) -> Task:
 		return Task(
 			config=self.tasks_config['craft_fire_people_action_plan'],
-			output_pydantic=FirefightingPlan
 		)
 
 	@task
@@ -79,6 +78,6 @@ class FireCrew():
 		return Crew(
 			agents=self.agents, # Automatically created by the @agent decorator
 			tasks=self.tasks, # Automatically created by the @task decorator
-			process=Process.hierarchical,
+			process=Process.sequential,
 			verbose=True,
 		)

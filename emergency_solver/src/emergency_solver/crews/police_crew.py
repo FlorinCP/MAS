@@ -55,7 +55,6 @@ class PoliceCrew():
 	def craft_police_action_plan(self) -> Task:
 		return Task(
 			config=self.tasks_config['craft_police_action_plan'],
-			output_pydantic=PolicePlan
 		)
 
 	@task

@@ -1,5 +1,5 @@
 from crewai.tools import BaseTool
-from typing import Type
+from typing import Type, Tuple
 from pydantic import BaseModel, Field
 import json
 import osmnx as ox
@@ -7,7 +7,7 @@ from emergency_solver.src.emergency_solver.schemas.schemas import RouteDistanceS
     IncidencePoliceReport, IncidenceFireReport, IncidenceMedicalReport
 import networkx
 
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 from typing import Optional, Type
 
 class MyCustomToolInput(BaseModel):
@@ -54,46 +54,56 @@ class CraftGeneralIncidenceReport(BaseTool):
             GeneralIncidenceReport: An instance of the GeneralIncidenceReport with the populated data.
         """
         general = GeneralIncidenceReport()
-        print(emergency_report)
+        location = emergency_report["incident_information"]["location"]
+        coordinates = location["coordinates"]  # Extract the list
+        x: float = coordinates[0]
+        y: float = coordinates[1]  # Ensure it's a tuple of floats
+        coordinates = (x, y)
         # Parse and populate medical report if present
-        if "Medical Crew" in emergency_report:
+        if "medical_crew" in emergency_report:
+            medical_crew = emergency_report["medical_crew"]
             general.medical = IncidenceMedicalReport(
-                emergency_id=emergency_report["Incident ID"],
-                location=emergency_report["Location"],
-                date=emergency_report["Timestamp"],
-                injured_people=emergency_report["Medical Crew"]["Number of Injured People"],
-                severity="high",  # Assuming severity from injuries provided
+                emergency_id=emergency_report["incident_information"]["incident_id"],
+                coordinates=coordinates,
+                node_id= location["node_id"],
+                date=emergency_report["incident_information"]["timestamp"],
+                injured_people=medical_crew["injured_people"],
+                severity=max(d["severity"] for d in medical_crew["details"]),  # Use max severity from details
                 dest_hospital="Hospital A",  # Placeholder destination hospital
                 dist_to_hospital=5.0  # Placeholder distance in kilometers
             )
 
         # Parse and populate fire report if present
-        if "Fire Crew" in emergency_report:
+        if "fire_crew" in emergency_report:
+            fire_crew = emergency_report["fire_crew"]
             general.fire = IncidenceFireReport(
-                emergency_id=emergency_report["Incident ID"],
-                location=emergency_report["Location"],
-                date=emergency_report["Timestamp"],
-                fire_type=emergency_report["Fire Crew"]["Fire Level (1-5)"],
-                severity="medium",  # From fire level provided
-                wind_direction=emergency_report["Fire Crew"]["Wind Direction"],
-                wind_speed=emergency_report["Fire Crew"]["Wind Speed (km/h)"],
-                affected_area=emergency_report["Fire Crew"]["Affected Area (m²)"],
-                people_to_rescue=emergency_report["Fire Crew"]["People Needing Rescue"],
+                emergency_id=emergency_report["incident_information"]["incident_id"],
+                coordinates=coordinates,
+                node_id=location["node_id"],
+                date=emergency_report["incident_information"]["timestamp"],
+                fire_type=fire_crew["fire_nature"],
+                severity=fire_crew["fire_level"].lower(),  # Assuming severity is mapped to fire level
+                wind_direction=fire_crew["wind_direction"],
+                wind_speed=fire_crew["wind_speed"],
+                affected_area=fire_crew["affected_area"],
+                people_to_rescue=fire_crew["people_rescued"],
                 required_equipment=["Fire truck", "Ladder", "Extinguisher"]  # Placeholder equipment
             )
 
         # Parse and populate police report if present
-        if "Police Crew" in emergency_report:
+        if "police_crew" in emergency_report:
+            police_crew = emergency_report["police_crew"]
             general.police = IncidencePoliceReport(
-                emergency_id=emergency_report["Incident ID"],
-                location=emergency_report["Location"],
-                date=emergency_report["Timestamp"],
-                affected_streets=[],  # No street details provided
-                traffic_status=emergency_report["Police Crew"]["Traffic Status"],
-                crowd_size=emergency_report["Police Crew"]["Crowd Size"]
+                emergency_id=emergency_report["incident_information"]["incident_id"],
+                coordinates=coordinates,
+                node_id=location["node_id"],
+                date=emergency_report["incident_information"]["timestamp"],
+                affected_streets=[],  # Placeholder as street details are not provided
+                traffic_status=police_crew["traffic_status"],
+                crowd_size=police_crew["crowd_size"]
             )
 
-        return general
+        return general.json()
 
 
 class ReadResources(BaseTool):
@@ -102,8 +112,8 @@ class ReadResources(BaseTool):
         "Tool that allows to read the available resources from a JSON file."
     )
 
-    def _run(self, argument: str) -> str:
-        with open(argument, "r", encoding="utf-8") as file:
+    def _run(self, file_name: str) -> str:
+        with open(file_name, "r", encoding="utf-8") as file:
             return json.load(file)
 
 

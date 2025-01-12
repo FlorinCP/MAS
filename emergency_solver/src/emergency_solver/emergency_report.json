@@ -1,0 +1,66 @@
+{
+    "incident_information": {
+        "incident_id": "1863",
+        "timestamp": "2025-01-12 00:18:30",
+        "location": {
+            "coordinates": [
+                41.672643,
+                -0.8344491
+            ],
+            "node_id": 3730683156
+        }
+    },
+    "medical_crew": {
+        "injured_people": 5,
+        "details": [
+            {
+                "severity": 4,
+                "injuries": [
+                    "Fractures"
+                ]
+            },
+            {
+                "severity": 2,
+                "injuries": [
+                    "Burns",
+                    "Smoke Inhalation"
+                ]
+            },
+            {
+                "severity": 5,
+                "injuries": [
+                    "Smoke Inhalation"
+                ]
+            },
+            {
+                "severity": 8,
+                "injuries": [
+                    "Lacerations",
+                    "Fractures"
+                ]
+            },
+            {
+                "severity": 10,
+                "injuries": [
+                    "Lacerations"
+                ]
+            }
+        ]
+    },
+    "fire_crew": {
+        "fire_level": "Low",
+        "affected_area": 3686.81,
+        "buildings_involved": 3,
+        "wind_direction": "West",
+        "wind_speed": 32,
+        "people_rescued": 11,
+        "fire_nature": "Ordinary",
+        "building_level": "Street level"
+    },
+    "police_crew": {
+        "situation_description": "Hostage situation",
+        "suspects": 0,
+        "traffic_status": "Heavy Traffic",
+        "crowd_size": 344
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "emergency_id": 1,
+  "date": "2023-03-15",
+  "police_plan": {
+    "emergency_id": 1,
+    "num_patrols": 7,
+    "patrol_stations_involved": ["Alcalde", "Delicias"],
+    "traffic_redir": [
+      "Avenue of the Liberty towards the city center",
+      "Plaza de Espana towards the north exit"
+    ],
+    "evacuation_plan": "Evacuate all buildings within a 1km radius and relocate people to designated shelters."
+  },
+  "firefighting_plan": {
+    "emergency_id": 1,
+    "num_firetrucks": 7,
+    "types_firetrucks": ["Tanker truck", "Ladder truck", "Rescue truck"],
+    "fire_stations_involved": ["Central Station", "Delicias Station"],
+    "rescue_equipment": ["Two ladders", "One rescue net"],
+    "personnel": ["15 firefighters and 3 officers"]
+  },
+  "medical_plan": {
+    "emergency_id": 1,
+    "num_ambulances": 2,
+    "ambulance_origins": ["Alcalde Station", "Delicias Station"],
+    "dest_hospital": "University Hospital Zaragoza",
+    "required_beds": 20,
+    "personnel": ["5 paramedics and 1 doctor"]
+  }
+}

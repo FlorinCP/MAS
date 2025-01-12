@@ -48,7 +48,6 @@ class MedicalCrew():
 	def craft_medical_action_plan(self) -> Task:
 		return Task(
 			config=self.tasks_config['craft_medical_action_plan'],
-			output_pydantic=MedicalPlan
 		)
 
 	@task

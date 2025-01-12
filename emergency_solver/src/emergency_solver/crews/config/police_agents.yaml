@@ -3,7 +3,7 @@ police:
     General Purpose Police
   goal: >
     - Assess the emergency situation based on the information provided by the Dispatcher.
-    - Decide which streets need to be blocked and propose alternative routes.
+    - Decide which streets need to be blocked and propose alternative routes, based on the Zaragoza map and the current location of the emergency.
     - Collaborate with the Allocator to request resource allocation.
     - Contribute to crafting the Police section of the action plan and report it to the Dispatcher.
 

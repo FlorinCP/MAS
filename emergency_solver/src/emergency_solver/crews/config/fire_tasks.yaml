@@ -2,12 +2,12 @@ handle_fire_people_report:
   description: >
     Manage the report related to the Fire people crew by coordinating with the Firefighter and Rescuer agents.
   steps: >
-    1. Read Dispatcher Pydantic output for the Fire people crew.  
+    1. Read Dispatcher output for the Fire people crew.  
     2. Contact both the Firefighter and the Rescuer agents (in parallel) to gather information about the available resources.  
   expected_output: >
-    Information about the necessities of the emergency in terms of firefighting and rescuing to obtain the best resource allocation from both the Firefighter and Rescuer agents.
+    Information about the necessities of the emergency in terms of firefighting and rescuing to obtain the best resource allocation from both the Firefighter and Rescuer agents. Base your report in the information you received.
   schema:
-    agent: commander
+  agent: commander
 
 craft_fire_people_action_plan:
   description: >
@@ -19,7 +19,7 @@ craft_fire_people_action_plan:
   expected_output: >
     A detailed Fire people section of the action plan, validated and ready for submission to the Dispatcher.
   schema:
-    agent: commander
+  agent: commander
 
 allocate_fire_extinguishing_resources:
   description: >
@@ -32,7 +32,7 @@ allocate_fire_extinguishing_resources:
   expected_output: >
     A list of fire-extinguishing resources and their deployment plan, sent to the Commander.
   schema:
-    agent: firefighter
+  agent: firefighter
 
 allocate_rescuing_resources:
   description: >
@@ -45,4 +45,4 @@ allocate_rescuing_resources:
   expected_output: >
     A list of rescuing resources and their deployment plan, sent to the Commander.
   schema:
-    agent: rescuer
+  agent: rescuer

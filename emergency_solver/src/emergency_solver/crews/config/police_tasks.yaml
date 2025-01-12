@@ -9,7 +9,7 @@ handle_police_report:
   expected_output: >
     An assessment report and resource allocation request sent to the Allocator, including preliminary street block information.
   schema:
-    agent: general_purpose_police
+  agent: police
 
 block_streets:
   description: >
@@ -20,7 +20,7 @@ block_streets:
   expected_output: >
     A detailed list of blocked streets and alternative routes to be included in the action plan.
   schema:
-    agent: general_purpose_police
+  agent: police
 
 craft_police_action_plan:
   description: >
@@ -31,18 +31,16 @@ craft_police_action_plan:
     3. Report the Police action plan to the Dispatcher.
   expected_output: >
     A detailed Police section of the action plan, validated and ready for submission to the Dispatcher.
-  schema:
-    agent: general_purpose_police
+  agent: police
 
 allocate_police_resources:
   description: >
     Determine and allocate the necessary police resources for the situation.
   steps: >
     1. Receive the recommendation from the General Purpose Police.  
-    2. Read available police resources.  
+    2. Read available police resources from {police_resources} JSON file.  
     3. Decide which resources (cars, guns, fences) should be sent, including computing distances between the scene and the resource locations.  
     4. Send the final decision back to the General Purpose Police.
   expected_output: >
     A list of police resources and their deployment plan, sent to the General Purpose Police.
-  schema:
-    agent: allocator
+  agent: allocator

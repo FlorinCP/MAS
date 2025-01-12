@@ -1,7 +1,7 @@
 craft_action_plan:
   description: >
     Combine proposals from all crews and create a comprehensive action plan. This information is provided in {plans}.
-    Ensure the plan is reviewed and finalized with human input before sharing.
+    Ensure the plan is reviewed and finalized with human input before sharing. Also, make sure the information provided is about the city of Zaragoza.
   steps: >
     1. Wait for the crews to finalize their proposals.  
     2. Aggregate the information received into a cohesive action plan proposal.  

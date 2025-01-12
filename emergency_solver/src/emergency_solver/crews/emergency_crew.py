@@ -29,7 +29,7 @@ class EmergencyCrew():
 		return Task(
 			config=self.tasks_config['handle_emergency_report'],
 			tools=[ReadEmergencyReport(), CraftGeneralIncidenceReport(result_as_answer=True)],
-			output_pydantic = GeneralIncidenceReport
+			verbose=True
 		)
 
 

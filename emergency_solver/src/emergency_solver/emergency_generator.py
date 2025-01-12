@@ -2,6 +2,7 @@ import osmnx as ox
 import random
 from datetime import datetime
 import os
+import json
 
 # Configuración
 city_name = "Zaragoza, Spain"
@@ -20,8 +21,8 @@ def load_or_save_zaragoza_graph(filename):
     return graph
 
 
-# Generar el informe en formato markdown
-def generate_markdown_emergency_report_with_map(graph) -> str:
+# Generar el informe en formato JSON
+def generate_json_emergency_report(graph) -> dict:
     import networkx as nx
 
     # Verifica si el grafo tiene nodos
@@ -41,71 +42,64 @@ def generate_markdown_emergency_report_with_map(graph) -> str:
     medical_details = []
     for _ in range(injured_people):
         medical_severity = random.randint(1, 10)
-        injuries = ", ".join(random.sample(["Burns", "Fractures", "Lacerations", "Smoke Inhalation"], k=random.randint(1, 3)))
+        injuries = random.sample(["Burns", "Fractures", "Lacerations", "Smoke Inhalation"], k=random.randint(1, 3))
         medical_details.append({
             'severity': medical_severity,
             'injuries': injuries
         })
 
     # Generar detalles para la sección de Bomberos
-    fire_level = random.choice(["Low", "Medium", "High"])
-    affected_area = round(random.uniform(50, 5000), 2)
-    buildings_involved = random.randint(1, 10)
-    wind_direction = random.choice(["North", "South", "East", "West"])
-    wind_speed = random.randint(10, 50)  # Wind speed in km/h
-    people_rescued = random.randint(1, 20)
-    fire_nature = random.choice(["Ordinary", "Electrical", "Gas", "Chemical"])
-    building_level = random.choice(["Street level", "1st floor", "2nd floor", "Top floor"])
+    fire_details = {
+        'fire_level': random.choice(["Low", "Medium", "High"]),
+        'affected_area': round(random.uniform(50, 5000), 2),
+        'buildings_involved': random.randint(1, 10),
+        'wind_direction': random.choice(["North", "South", "East", "West"]),
+        'wind_speed': random.randint(10, 50),  # Wind speed in km/h
+        'people_rescued': random.randint(1, 20),
+        'fire_nature': random.choice(["Ordinary", "Electrical", "Gas", "Chemical"]),
+        'building_level': random.choice(["Street level", "1st floor", "2nd floor", "Top floor"]),
+    }
 
     # Generar detalles para la sección Policial
-    police_description = random.choice(["Armed robbery", "Hostage situation", "Protest", "Traffic accident"])
-    suspects = random.randint(0, 5)
-    traffic_status = random.choice(["Clear", "Heavy Traffic", "Blocked"])
-    crowd_size = random.randint(10, 500)
+    police_details = {
+        'situation_description': random.choice(["Armed robbery", "Hostage situation", "Protest", "Traffic accident"]),
+        'suspects': random.randint(0, 5),
+        'traffic_status': random.choice(["Clear", "Heavy Traffic", "Blocked"]),
+        'crowd_size': random.randint(10, 500),
+    }
 
-    # Construir el informe en formato markdown
-    markdown_report = f"""
-# Emergency Report
+    # Construir el informe en formato JSON
+    json_report = {
+        "incident_information": {
+            "incident_id": incident_id,
+            "timestamp": timestamp,
+            "location": {
+                "coordinates": location_coords,
+                "node_id": location
+            }
+        },
+        "medical_crew": {
+            "injured_people": injured_people,
+            "details": medical_details
+        },
+        "fire_crew": fire_details,
+        "police_crew": police_details
+    }
 
-## Incident Information
-- **Incident ID:** {incident_id}
-- **Timestamp:** {timestamp}
-- **Location:** Coordinates {location_coords} (Node ID: {location})
-
-## Medical Crew
-- **Number of Injured People:** {injured_people}
-- {''.join([f"**Injured Person {i+1}:** Severity: {medical_details[i]['severity']}, Injuries: {medical_details[i]['injuries']}\n" for i in range(injured_people)])}
-
-## Fire Crew
-- **Fire Level (1-5):** {fire_level}
-- **Affected Area (m²):** {affected_area}
-- **Buildings Involved:** {buildings_involved}
-- **Wind Direction:** {wind_direction}
-- **Wind Speed (km/h):** {wind_speed}
-- **People Needing Rescue:** {people_rescued}
-- **Fire Nature:** {fire_nature}
-- **Building Level:** {building_level}
-
-## Police Crew
-- **Situation Description:** {police_description}
-- **Number of Suspects:** {suspects}
-- **Traffic Status:** {traffic_status}
-- **Crowd Size:** {crowd_size}
-    """
-
-    return markdown_report.strip()
+    return json_report
 
 
-# Guardar el informe en un archivo .md
-def save_report_to_file(report: str, filename: str):
+# Guardar el informe en un archivo .json
+def save_report_to_json(report: dict, filename: str):
     with open(filename, "w", encoding="utf-8") as file:
-        file.write(report)
+        json.dump(report, file, indent=4)
     print(f"Report saved to {filename}")
+
 
 # Cargar el grafo y generar el informe
 if __name__ == "__main__":
     graph = load_or_save_zaragoza_graph(graph_filename)
     if graph:
-        report = generate_markdown_emergency_report_with_map(graph)
-        filename = f"emergency_report_{datetime.now().strftime('%Y-%m-%d_%Hh%Mm%Ss')}.md"
-        save_report_to_file(report, filename)
+        report = generate_json_emergency_report(graph)
+        filename = "emergency_report.json"
+        save_report_to_json(report, filename)
