@@ -21,7 +21,7 @@ A Multi-Agent System for coordinating emergency responses in Zaragoza, Spain. Th
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/zaragoza-emergency-mas.git
+git clone https://github.com/FlorinCP/zaragoza-emergency-mas.git
 cd zaragoza-emergency-mas
 ```
 
