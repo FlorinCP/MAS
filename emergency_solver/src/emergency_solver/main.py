@@ -10,6 +10,9 @@ from emergency_solver.src.emergency_solver.crews.fire_crew import FireCrew
 from emergency_solver.src.emergency_solver.crews.medical_crew import MedicalCrew
 from emergency_solver.src.emergency_solver.crews.police_crew import PoliceCrew
 
+def write_output(output, filename):
+    with open(filename, "w") as f:
+        f.write(output)
 
 class EmergencyState(BaseModel):
     incidence_reports: str = ""
@@ -23,7 +26,7 @@ class EmergencyFlow(Flow[EmergencyState]):
         emergency_crew = EmergencyCrew()
         result = emergency_crew.crew().kickoff(inputs={"emergency_report": "./emergency_report.json"})
         self.state.incidence_reports = result.raw
-        print(self.state.incidence_reports)
+        write_output(self.state.incidence_reports, "emergency_crew_output.json")
 
     @router(handle_emergency)
     def distribute(self):
@@ -40,6 +43,7 @@ class EmergencyFlow(Flow[EmergencyState]):
                     "medical_personnel": "resources/medical_personnel.json"
                 })
             )
+            write_output(self.state.plans["medical"].raw, "medical_crew_output.txt")
 
         # Kick off the Police crew if applicable
         if "police" in self.state.incidence_reports:
@@ -50,6 +54,7 @@ class EmergencyFlow(Flow[EmergencyState]):
                     "police_resources": "resources/police_stations.json",
                 })
             )
+            write_output(self.state.plans["police"].raw, "police_crew_output.md")
 
         # Kick off the Fire crew if applicable
         if "fire" in self.state.incidence_reports:
@@ -61,14 +66,14 @@ class EmergencyFlow(Flow[EmergencyState]):
                     "rescue_resources": "resources/rescuers.json"
                 })
             )
+            write_output(self.state.plans["fire"].raw, "fire_crew_output.md")
 
     @listen(distribute)
     def action_plan(self):
         print("Crafting final Action Plan")
         combiner_crew = CombinerCrew()
         result =  combiner_crew.crew().kickoff({"plans": self.state.plans})
-        with open("final_plan.json", "w") as f:
-            f.write(result.raw)
+        write_output(result.raw, "final_plan.json")
 
 
 def kickoff():
@@ -83,3 +88,4 @@ def plot():
 
 if __name__ == "__main__":
     kickoff()
+    #plot()

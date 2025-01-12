@@ -1,0 +1,34 @@
+{
+    "medical": {
+        "emergency_id": 1863,
+        "coordinates": [41.672643, -0.8344491],
+        "node_id": 3730683156,
+        "date": "2025-01-12T00:18:30",
+        "injured_people": 5,
+        "severity": 10,
+        "dest_hospital": "Hospital A",
+        "dist_to_hospital": 5.0
+    },
+    "fire": {
+        "emergency_id": 1863,
+        "coordinates": [41.672643, -0.8344491],
+        "node_id": 3730683156,
+        "date": "2025-01-12T00:18:30",
+        "fire_type": "Ordinary",
+        "severity": "low",
+        "wind_direction": "West",
+        "wind_speed": 32,
+        "affected_area": 3686.81,
+        "people_to_rescue": 11,
+        "required_equipment": ["Fire truck", "Ladder", "Extinguisher"]
+    },
+    "police": {
+        "emergency_id": 1863,
+        "coordinates": [41.672643, -0.8344491],
+        "node_id": 3730683156,
+        "date": "2025-01-12T00:18:30",
+        "affected_streets": [],
+        "traffic_status": "Heavy Traffic",
+        "crowd_size": 344
+    }
+}
